@@ -8,10 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 //@Scope(value="prototype")
@@ -26,5 +25,21 @@ public class EmployeeController {
     public Employee addEmployee(@RequestBody Employee employee) {
         System.out.println(" Value of ::" + this.toString());
         return employeeService.addEmployee(employee);
+    }
+
+    @GetMapping("/employees")
+    public List<Employee> fetchEmployeeList() {
+        return employeeService.fetchEmployeeList();
+    }
+
+    @PutMapping("/departments/{id}")
+    public Employee updateEmployee(@RequestBody Employee employee, @PathVariable("id") Long id) {
+        return employeeService.updateEmployee(employee, id);
+    }
+
+    @DeleteMapping("/departments/{id}")
+    public String deleteEmployeetById(@PathVariable("id") Long id) {
+        employeeService.deleteEmployeeById(id);
+        return "Deleted Successfully";
     }
 }
